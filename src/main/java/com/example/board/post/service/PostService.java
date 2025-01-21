@@ -1,12 +1,14 @@
-package com.example.board.common.service;
+package com.example.board.post.service;
 
 import com.example.board.author.domain.Author;
-import com.example.board.author.dtos.AuthorListRes;
-import com.example.board.author.dtos.AuthorSaveReq;
+import com.example.board.author.dtos.AuthorDetailRes;
+import com.example.board.author.dtos.AuthorUpdateReq;
 import com.example.board.author.repository.AuthorRepository;
 import com.example.board.post.domain.Post;
+import com.example.board.post.dtos.PostDetailRes;
 import com.example.board.post.dtos.PostListRes;
 import com.example.board.post.dtos.PostSaveReq;
+import com.example.board.post.dtos.PostUpdateReq;
 import com.example.board.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,20 @@ public class PostService {
         Author author = authorRepository.findByEmail(postSaveReq.getEmail()).orElseThrow(()->new EntityNotFoundException());
         Post post = postRepository.save(postSaveReq.toEntity(author));
         return post;
+    }
+
+    public void delete(Long id){
+        Post post = postRepository.findById(id).orElseThrow(()->new EntityNotFoundException("없는 id입니다"));
+        postRepository.delete(post);
+    }
+
+    public void updateById(Long id, PostUpdateReq postUpdateReq){
+        Post post = postRepository.findById(id).orElseThrow(()->new EntityNotFoundException("없는 id입니다"));
+        post.updatePost(postUpdateReq.getTitle(), postUpdateReq.getContents());
+    }
+
+    public PostDetailRes findById(Long id){
+        return postRepository.findById(id).orElseThrow(()->new EntityNotFoundException("없는 ID입니다")).detailFromEntity();
     }
 
 

@@ -1,0 +1,22 @@
+package com.example.board.post.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@NoArgsConstructor //기본생성자
+@AllArgsConstructor //모든 매개변수있는 생성자
+@Data
+@Builder
+public class PostDetailRes {
+    //    id, title, contents, authorEmail, createdTime, updatedTime
+    private Long id;
+    private String title;
+    private String contents;
+    private String authorEmail;
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
+}
