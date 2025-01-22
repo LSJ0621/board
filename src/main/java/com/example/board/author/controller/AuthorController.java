@@ -1,16 +1,19 @@
 package com.example.board.author.controller;
 
+import com.example.board.author.domain.Author;
 import com.example.board.author.dtos.AuthorDetailRes;
 import com.example.board.author.dtos.AuthorListRes;
 import com.example.board.author.dtos.AuthorSaveReq;
 import com.example.board.author.dtos.AuthorUpdateReq;
 import com.example.board.author.service.AuthorService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/author")
 public class AuthorController {
     private final AuthorService authorService;
@@ -20,14 +23,21 @@ public class AuthorController {
     }
 
     @GetMapping("/list")
-    public List<AuthorListRes> memberList(){
-        return authorService.findAll();
+    public String memberList(Model model){
+        List<AuthorListRes> authorListResList =  authorService.findAll();
+        model.addAttribute("authorList",authorListResList);
+        return "/author/author_list";
+    }
+
+    @GetMapping("/create")
+    public String authorCreate2(){
+        return "/author/author_create";
     }
 
     @PostMapping("/create")
-    public String authorCreatePost(@Valid AuthorSaveReq authorSaveReq){
+    public String authorCreate(@Valid AuthorSaveReq authorSaveReq){
         authorService.save(authorSaveReq);
-        return "ok";
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
@@ -36,9 +46,10 @@ public class AuthorController {
         return "ok";
     }
     @GetMapping("/detail/{id}")
-    public AuthorDetailRes memberDetail(@PathVariable long id){
+    public String memberDetail(@PathVariable long id,Model model){
         AuthorDetailRes dto = authorService.findById(id);
-        return dto;
+        model.addAttribute("author",dto);
+        return "author/author_detail";
     }
 
     @PostMapping("/update/{id}")

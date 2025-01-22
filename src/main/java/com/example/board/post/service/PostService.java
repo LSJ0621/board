@@ -11,6 +11,8 @@ import com.example.board.post.dtos.PostSaveReq;
 import com.example.board.post.dtos.PostUpdateReq;
 import com.example.board.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,12 @@ public class PostService {
 
     public List<PostListRes> findAll() {
         return postRepository.findAll().stream().map(m -> m.postListFromEntity()).collect(Collectors.toList());
+    }
+
+//    Page 객체안에 Post가 리스트형태로 담겨있음
+    public Page<PostListRes> findAllPaging(Pageable pageable) {
+        Page<Post> pagePosts = postRepository.findAll(pageable);
+        return pagePosts.map(p->p.postListFromEntity());
     }
 
     public Post save(PostSaveReq postSaveReq) {

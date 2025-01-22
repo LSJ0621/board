@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class AuthorDetailRes {
 //    id, name, email, password, role, postCount, createdTime
     private Long id;
+    private String name;
     private String email;
     private String password;
     private Role role;

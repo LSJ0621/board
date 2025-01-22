@@ -9,6 +9,7 @@ import com.example.board.author.repository.AuthorRepository;
 import com.example.board.post.dtos.PostDetailRes;
 import com.example.board.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

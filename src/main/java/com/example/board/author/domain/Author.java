@@ -44,7 +44,7 @@ public class Author extends BaseTimeEntity {
     public AuthorDetailRes detailFromEntity(){
         int postcount = this.posts.size();
         LocalDateTime createdtime = this.getCreatedTime();
-        return AuthorDetailRes.builder().id(this.id).email(this.email).password(this.password).role(this.role).postCount(postcount).createdTime(createdtime).build();
+        return AuthorDetailRes.builder().id(this.id).name(this.name).email(this.email).password(this.password).role(this.role).postCount(postcount).createdTime(createdtime).build();
     }
 
     public void updateAuthor(String updateName,String updatePw){
