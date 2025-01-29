@@ -7,10 +7,7 @@ import com.example.board.author.dtos.AuthorListRes;
 import com.example.board.common.domain.BaseTimeEntity;
 import com.example.board.post.dtos.PostDetailRes;
 import com.example.board.post.dtos.PostListRes;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Getter
 @Entity
 @Builder
 public class Post extends BaseTimeEntity{
@@ -31,7 +29,8 @@ public class Post extends BaseTimeEntity{
     @Column(length =3000)
     private String contents;
     private String appointment;
-    @CreationTimestamp
+//    자동으로 현재시간 넣어줌
+//    @CreationTimestamp
     private LocalDateTime appointmentTime;
     @ManyToOne(fetch = FetchType.LAZY) //ManyToOne에서는 default EAGER
     @JoinColumn(name = "author_id")
@@ -45,8 +44,14 @@ public class Post extends BaseTimeEntity{
         return PostDetailRes.builder().id(this.id).title(this.title).contents(this.contents).authorEmail(this.author.getEmail()).createdTime(this.getCreatedTime()).updatedTime(this.getUpdatedTime()).build();
     }
 
-    public void updatePost(String updateTitle,String updateContents){
+    public void updatePost(String updateTitle,String updateContents) {
         this.title = updateTitle;
         this.contents = updateContents;
     }
+
+    public void updateAppointment(String appointment){
+        this.appointment = appointment;
+    }
+
+
 }

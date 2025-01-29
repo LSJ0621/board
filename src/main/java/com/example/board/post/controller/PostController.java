@@ -43,6 +43,12 @@ public class PostController {
         return "post/post_list";
     }
 
+    @GetMapping("list/fetchjoin")
+    @ResponseBody
+    public String postListFetchJoin(){
+        postService.listFetchJoin();
+        return "ok";
+    }
     @GetMapping("/create")
     public String authorCreatePost2(){
         return "/post/post_create";
@@ -51,7 +57,7 @@ public class PostController {
     @PostMapping("/create")
     public String authorCreatePost(@Valid PostSaveReq postSaveReq){
         postService.save(postSaveReq);
-        return "redirect:/post/list";
+        return "redirect:/post/list/paging";
     }
 
     @GetMapping("/delete/{id}")

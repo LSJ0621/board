@@ -33,6 +33,10 @@ public class AuthorController {
     public String authorCreate2(){
         return "/author/author_create";
     }
+    @GetMapping("/login")
+    public String authorLoginScreen(){
+        return "/author/author_login";
+    }
 
     @PostMapping("/create")
     public String authorCreate(@Valid AuthorSaveReq authorSaveReq){
